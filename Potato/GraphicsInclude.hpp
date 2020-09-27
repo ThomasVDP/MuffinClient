@@ -1,0 +1,6 @@
+#ifndef POTATO_ENGINE_GRAPHICS_INCLUDE_HPP
+#define POTATO_ENGINE_GRAPHICS_INCLUDE_HPP
+
+#include <GLFW/glfw3.h>
+
+#endif
