@@ -12,6 +12,7 @@ git clone --recursive https://github.com/ThomasVDP/MuffinClient
 ```
 Create a build dir:
 ```
+cd MuffinClient
 mkdir build; cd build
 ```
 First run conan install:
