@@ -2,6 +2,10 @@
 A C++ replica of the well known game Minecraft
 
 ## Building
+### Requirements
+- CMake
+- Conan
+### Building
 To build this project, clone the repository:
 ```
 git clone --recursive https://github.com/ThomasVDP/MuffinClient
