@@ -4,6 +4,8 @@ set(CMAKE_LEGACY_CYGWIN_WIN32 0)
 set (CMAKE_CXX_STANDARD 17)
 project ("Minecraft Bot Client")
 
+set(GLFW_ENABLED ON CACHE BOOL "Whether to use GLFW to create the window surface (Vulkan-specific)" FORCE)
+set(DILIGENT_NO_OPENGL ON CACHE BOOL "" FORCE)
 add_subdirectory(DiligentCore)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
