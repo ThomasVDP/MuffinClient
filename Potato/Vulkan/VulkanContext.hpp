@@ -38,6 +38,7 @@ namespace Potato
 		Diligent::RefCntAutoPtr<Diligent::IRenderDevice> GetRenderDevice() const noexcept override { return m_pDevice; }
 		Diligent::RefCntAutoPtr<Diligent::IDeviceContext> GetImmediateContext() const noexcept override { return m_pImmediateContext; }
 		Diligent::RefCntAutoPtr<Diligent::ISwapChain> GetSwapChain() const noexcept override { return m_pSwapChain; }
+		Diligent::IEngineFactory* GetEngineFactory() const noexcept override { return m_pFactoryVk; }
 
 	private:
 		GLFWwindow* m_WindowHandle;

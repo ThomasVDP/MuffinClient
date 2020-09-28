@@ -32,6 +32,7 @@ namespace Potato
 		virtual Diligent::RefCntAutoPtr<Diligent::IRenderDevice> GetRenderDevice() const noexcept = 0;
 		virtual Diligent::RefCntAutoPtr<Diligent::IDeviceContext> GetImmediateContext() const noexcept = 0;
 		virtual Diligent::RefCntAutoPtr<Diligent::ISwapChain> GetSwapChain() const noexcept = 0;
+		virtual Diligent::IEngineFactory* GetEngineFactory() const noexcept = 0;
 
 		virtual void ShutDown() = 0;
 

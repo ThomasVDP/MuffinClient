@@ -1,5 +1,7 @@
 #include "GraphicsBaseLayer.hpp"
 
+#include "Potato/Renderer/BasicRenderer.hpp"
+
 namespace Muffin
 {
 	GraphicsBaseLayer::GraphicsBaseLayer() :
@@ -33,6 +35,7 @@ namespace Muffin
 	void GraphicsBaseLayer::OnRender()
 	{
 		//render triangle
+		Potato::BasicRenderer::DrawTriangle();
 	}
 
 	void GraphicsBaseLayer::OnEvent(Potato::Event& event)

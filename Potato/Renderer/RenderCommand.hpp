@@ -29,6 +29,11 @@ namespace Potato
 			s_RendererAPI->Present();
 		}
 
+		static void DrawVertices(uint32_t count)
+		{
+			s_RendererAPI->DrawVertices(count);
+		}
+
 	private:
 		static Scope<RendererAPI> s_RendererAPI;
 	};

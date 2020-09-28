@@ -28,4 +28,11 @@ namespace Potato
 	{
 		m_GraphicsContext->GetSwapChain()->Present();
 	}
+
+	void RendererAPI::DrawVertices(uint32_t t_Count)
+	{
+		Diligent::DrawAttribs drawAttrs;
+		drawAttrs.NumVertices = t_Count;
+		m_GraphicsContext->GetImmediateContext()->Draw(drawAttrs);
+	}
 }	// namespace Potato

@@ -17,6 +17,8 @@ namespace Potato
 
 		void Clear(const glm::vec4& color);
 
+		void DrawVertices(uint32_t count);
+
 		void Present() const;
 
 	private:

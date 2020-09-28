@@ -1,12 +1,14 @@
 #include "Renderer.hpp"
 
 #include "RenderCommand.hpp"
+#include "BasicRenderer.hpp"
 
 namespace Potato
 {
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		BasicRenderer::Init();
 	}
 
 	void Renderer::Shutdown()
