@@ -16,6 +16,7 @@ namespace Potato
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate(Timestep t_Timestep) {}
+		virtual void OnRender() {}
 		virtual void OnEvent(Event& event) {}
 
 		inline const std::string& GetName() { return m_DebugName; }

@@ -3,6 +3,7 @@
 #include "GLFW/glfw3.h"
 
 #include "Renderer/Renderer.hpp"
+#include "Renderer/RenderCommand.hpp"
 
 namespace Potato
 {
@@ -76,6 +77,21 @@ namespace Potato
 				}
 			}
 
+			//clear screen
+			Potato::RenderCommand::Clear({ 0.35f, 0.35f, 0.35f, 1.0f });
+
+			//draw layers
+			if (!m_Minimized)
+			{
+				{
+					//HZ_PROFILE_SCOPE("LayerStack OnRender");
+
+					for (Layer* layer : m_LayerStack)
+						layer->OnRender();
+				}
+			}
+
+			//Present on screen
 			m_Window->OnUpdate();
 		}
 	}

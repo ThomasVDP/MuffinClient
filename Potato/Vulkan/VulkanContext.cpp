@@ -50,6 +50,7 @@ namespace Potato
 
 	void VulkanContext::SwapBuffers()
 	{
+		this->m_pSwapChain->Present();
 	}
 
 	void VulkanContext::OnWindowResize(unsigned int t_Width, unsigned int t_Height)

@@ -17,6 +17,8 @@ namespace Muffin
 
 	void GraphicsBaseLayer::OnUpdate(Potato::Timestep t_Timestep)
 	{
+		//update
+		//POTATO_TRACE("Frametime: {}", t_Timestep.GetMilliseconds());
 		this->timePassed += t_Timestep.GetMilliseconds();
 		this->framesRendered++;
 		if (this->timePassed >= 1000)
@@ -26,14 +28,11 @@ namespace Muffin
 			this->framesRendered = 0;
 		}
 		//POTATO_TRACE("Frame time: {}", t_Timestep.GetMilliseconds());
+	}
 
-		//clear screen
-		Potato::RenderCommand::Clear({ 0.35f, 0.35f, 0.35f, 1.0f });
-
-		//render
-
-		//present
-		Potato::RenderCommand::Present();
+	void GraphicsBaseLayer::OnRender()
+	{
+		//render triangle
 	}
 
 	void GraphicsBaseLayer::OnEvent(Potato::Event& event)

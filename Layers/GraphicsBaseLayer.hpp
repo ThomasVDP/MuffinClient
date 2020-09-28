@@ -16,6 +16,8 @@ namespace Muffin
 
 		void OnUpdate(Potato::Timestep t_Timestep) override;
 
+		void OnRender() override;
+
 		void OnEvent(Potato::Event& event) override;
 
 	private:
