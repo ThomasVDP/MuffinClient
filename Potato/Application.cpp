@@ -14,7 +14,7 @@ namespace Potato
 		POTATO_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 		m_Window = Window::Create(WindowProps(name));
-		m_Window->SetEventCallback(POTATO_BIND_EVENT_FN(OnEvent, Event));
+		m_Window->SetEventCallback(POTATO_BIND_EVENT_FN(OnEvent));
 
 		Renderer::Init();
 	}
@@ -44,8 +44,8 @@ namespace Potato
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(POTATO_BIND_EVENT_FN(OnWindowClose, WindowCloseEvent));
-		dispatcher.Dispatch<WindowResizeEvent>(POTATO_BIND_EVENT_FN(OnWindowResize, WindowResizeEvent));
+		dispatcher.Dispatch<WindowCloseEvent>(POTATO_BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(POTATO_BIND_EVENT_FN(OnWindowResize));
 
 		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 		{
