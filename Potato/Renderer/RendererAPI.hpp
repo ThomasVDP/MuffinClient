@@ -19,6 +19,8 @@ namespace Potato
 
 		void DrawVertices(uint32_t count);
 
+		void DrawIndexed(uint32_t count);
+
 		void Present() const;
 
 	private:

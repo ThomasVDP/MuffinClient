@@ -5,6 +5,11 @@
 #include <Common/interface/RefCntAutoPtr.hpp>
 
 #include <string>
+#include <vector>
+
+#include "Potato/Core.hpp"
+#include "Shader.hpp"
+#include "Buffer.hpp"
 
 namespace Potato
 {
@@ -20,17 +25,19 @@ namespace Potato
 	public:
 		PipelineState(const std::string& t_Name, PipelineTypeEnum t_PipelineType = PipelineTypeEnum::GRAPHICS, Diligent::PRIMITIVE_TOPOLOGY t_PrimitiveTopology = Diligent::PRIMITIVE_TOPOLOGY_TRIANGLE_LIST);
 
-		void Create(const std::string& t_VertexPath, const std::string& t_PixelPath);
-
 		void Bind();
+
+		void AddShader(const Shader& t_Shader);
+
+		void SetVertexLayout(const VertexBuffer& t_VertexBuffer) { m_BufferLayout = t_VertexBuffer.GetLayout(); }
 
 		void SetCullMode(Diligent::CULL_MODE t_Mode) { this->m_CullMode = t_Mode; }
 
 		void SetDepthEnabled(bool t_DepthEnabled) { this->m_DepthEnabled = t_DepthEnabled; }
 
-	private:
-		Diligent::RefCntAutoPtr<Diligent::IShader> CreateShader(const std::string& t_ShaderSource, Diligent::SHADER_TYPE t_ShaderType);
+		void Create();
 
+	private:
 		std::string m_Name;
 		PipelineTypeEnum m_PipelineType;
 		Diligent::PRIMITIVE_TOPOLOGY m_PrimitiveTopology;
@@ -38,6 +45,9 @@ namespace Potato
 		bool m_DepthEnabled{ false };
 
 		Diligent::RefCntAutoPtr<Diligent::IPipelineState> m_pPSO;
+
+		std::vector<Shader> m_Shaders;
+		BufferLayout m_BufferLayout{};
 	};
 }	// namespace Potato
 

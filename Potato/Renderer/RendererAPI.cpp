@@ -35,4 +35,14 @@ namespace Potato
 		drawAttrs.NumVertices = t_Count;
 		m_GraphicsContext->GetImmediateContext()->Draw(drawAttrs);
 	}
+
+	void RendererAPI::DrawIndexed(uint32_t t_Count)
+	{
+		Diligent::DrawIndexedAttribs DrawAttrs;	  // This is an indexed draw call
+		DrawAttrs.IndexType = Diligent::VT_UINT32;	 // Index type
+		DrawAttrs.NumIndices = t_Count;
+		// Verify the state of vertex and index buffers
+		DrawAttrs.Flags = Diligent::DRAW_FLAG_VERIFY_ALL;
+		m_GraphicsContext->GetImmediateContext()->DrawIndexed(DrawAttrs);
+	}
 }	// namespace Potato

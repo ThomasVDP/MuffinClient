@@ -11,11 +11,37 @@ namespace Potato
 	{
 	}
 
-	void PipelineState::Create(const std::string& t_VertexPath, const std::string& t_PixelPath)
+	void PipelineState::Bind()
+	{
+		Application::Get().GetWindow()->GetRenderContext()->GetImmediateContext()->SetPipelineState(m_pPSO);
+	}
+
+	void PipelineState::AddShader(const Shader& t_Shader)
+	{
+		if (std::find_if(m_Shaders.begin(), m_Shaders.end(), [&t_Shader](const Shader& shader) { return shader.GetShaderType() == t_Shader.GetShaderType(); }) == m_Shaders.end())
+		{
+			m_Shaders.push_back(t_Shader);
+		}
+		else
+		{
+			const char* shaderType;
+			switch (t_Shader.GetShaderType())
+			{
+			case ShaderTypeEnum::VERTEX: shaderType = "Vertex"; break;
+			case ShaderTypeEnum::PIXEL: shaderType = "Pixel"; break;
+			}
+
+			POTATO_CORE_WARN("Already bound {0} Shader to pipeline state! (this will get ignored)", shaderType);
+		}
+	}
+
+	void PipelineState::Create()
 	{
 		Diligent::PipelineStateCreateInfo PSOCreateInfo;
 		Diligent::PipelineStateDesc& PSODesc = PSOCreateInfo.PSODesc;
 		PSODesc.Name = this->m_Name.c_str();
+
+		//set pipline type
 		switch (m_PipelineType)
 		{
 		case PipelineTypeEnum::GRAPHICS: PSODesc.PipelineType = Diligent::PIPELINE_TYPE_GRAPHICS; break;
@@ -23,6 +49,7 @@ namespace Potato
 		case PipelineTypeEnum::MESH: PSODesc.PipelineType = Diligent::PIPELINE_TYPE_MESH; break;
 		}
 
+		//default settings
 		Diligent::RefCntAutoPtr<Diligent::ISwapChain> swapChain = Application::Get().GetWindow()->GetRenderContext()->GetSwapChain();
 		PSODesc.GraphicsPipeline.NumRenderTargets = 1;
 		PSODesc.GraphicsPipeline.RTVFormats[0] = swapChain->GetDesc().ColorBufferFormat;
@@ -32,39 +59,24 @@ namespace Potato
 		PSODesc.GraphicsPipeline.RasterizerDesc.CullMode = m_CullMode;
 		PSODesc.GraphicsPipeline.DepthStencilDesc.DepthEnable = m_DepthEnabled;
 
-		Diligent::RefCntAutoPtr<Diligent::IShader> pVS = CreateShader(t_VertexPath, Diligent::SHADER_TYPE_VERTEX);
-		Diligent::RefCntAutoPtr<Diligent::IShader> pPS = CreateShader(t_PixelPath, Diligent::SHADER_TYPE_PIXEL);
-
-		PSODesc.GraphicsPipeline.pVS = pVS;
-		PSODesc.GraphicsPipeline.pPS = pPS;
-		Application::Get().GetWindow()->GetRenderContext()->GetRenderDevice()->CreatePipelineState(PSOCreateInfo, &m_pPSO);
-	}
-
-	void PipelineState::Bind()
-	{
-		Application::Get().GetWindow()->GetRenderContext()->GetImmediateContext()->SetPipelineState(m_pPSO);
-	}
-
-	Diligent::RefCntAutoPtr<Diligent::IShader> PipelineState::CreateShader(const std::string& t_ShaderPath, Diligent::SHADER_TYPE t_ShaderType)
-	{
-		Diligent::ShaderCreateInfo ShaderCI;
-		ShaderCI.SourceLanguage = Diligent::SHADER_SOURCE_LANGUAGE_HLSL;
-		ShaderCI.UseCombinedTextureSamplers = true;
-
-		Diligent::RefCntAutoPtr<Diligent::IShaderSourceInputStreamFactory> pShaderSourceFactory;
-		Application::Get().GetWindow()->GetRenderContext()->GetEngineFactory()->CreateDefaultShaderSourceStreamFactory(nullptr, &pShaderSourceFactory);
-		ShaderCI.pShaderSourceStreamFactory = pShaderSourceFactory;
-
-		// Create a vertex shader
-		Diligent::RefCntAutoPtr<Diligent::IShader> pShader;
+		//set shaders
+		for (const Shader& shader : m_Shaders)
 		{
-			ShaderCI.Desc.ShaderType = t_ShaderType;
-			ShaderCI.EntryPoint = "main";
-			ShaderCI.Desc.Name = (t_ShaderPath + ", shader type: " + std::to_string(t_ShaderType)).c_str();
-			ShaderCI.FilePath = t_ShaderPath.c_str();
-			Application::Get().GetWindow()->GetRenderContext()->GetRenderDevice()->CreateShader(ShaderCI, &pShader);
+			switch (shader.GetShaderType())
+			{
+			case ShaderTypeEnum::VERTEX: PSODesc.GraphicsPipeline.pVS = shader.GetShader(); break;
+			case ShaderTypeEnum::PIXEL: PSODesc.GraphicsPipeline.pPS = shader.GetShader(); break;
+			}
 		}
 
-		return pShader;
+		// Define vertex shader input layout
+		PSODesc.GraphicsPipeline.InputLayout.LayoutElements = m_BufferLayout.GetElements().data();
+		PSODesc.GraphicsPipeline.InputLayout.NumElements = m_BufferLayout.GetElements().size();
+
+		// Define variable type that will be used by default
+		PSODesc.ResourceLayout.DefaultVariableType = Diligent::SHADER_RESOURCE_VARIABLE_TYPE_STATIC;
+
+		//create the PipelineStateObject
+		Application::Get().GetWindow()->GetRenderContext()->GetRenderDevice()->CreatePipelineState(PSOCreateInfo, &m_pPSO);
 	}
 }	// namespace Potato
