@@ -3,11 +3,13 @@
 
 #include <Graphics/GraphicsEngine/interface/PipelineState.h>
 #include <Common/interface/RefCntAutoPtr.hpp>
+#include <Graphics/GraphicsTools/interface/MapHelper.hpp>
 
 #include <string>
 #include <vector>
 
 #include "Potato/Core.hpp"
+#include "Potato/Application.hpp"
 #include "Shader.hpp"
 #include "Buffer.hpp"
 
@@ -20,6 +22,20 @@ namespace Potato
 		MESH = 2
 	};
 
+	struct ShaderConstantsData
+	{
+		const char* m_Name;
+		uint32_t m_Size;
+		ShaderTypeEnum m_ShaderType;
+	};
+
+	struct ShaderConstant
+	{
+		std::string m_Name;
+		ShaderTypeEnum m_ShaderType;
+		Diligent::RefCntAutoPtr<Diligent::IBuffer> m_Buffer;
+	};
+
 	class PipelineState
 	{
 	public:
@@ -29,7 +45,25 @@ namespace Potato
 
 		void AddShader(const Shader& t_Shader);
 
-		void SetVertexLayout(const VertexBuffer& t_VertexBuffer) { m_BufferLayout = t_VertexBuffer.GetLayout(); }
+		void CreateShaderConstants(const std::initializer_list<ShaderConstantsData>& t_ShaderConstants);
+
+		template<typename T>
+		void SetShaderConstants(ShaderTypeEnum t_ShaderType, const std::string& t_Name, const T& t_Data)
+		{
+			std::vector<ShaderConstant>::iterator shaderConstant = std::find_if(m_ShaderConstants.begin(), m_ShaderConstants.end(), [t_ShaderType, t_Name](const ShaderConstant& sc) { return sc.m_Name == t_Name && sc.m_ShaderType == t_ShaderType; });
+			if (shaderConstant == m_ShaderConstants.end())
+			{
+				return;
+			}
+			// Map the buffer and write current world-view-projection matrix
+			Diligent::MapHelper<T> CBConstants(Application::Get().GetWindow()->GetRenderContext()->GetImmediateContext(), shaderConstant->m_Buffer, Diligent::MAP_WRITE, Diligent::MAP_FLAG_DISCARD);
+			*CBConstants = t_Data;
+		}
+
+		void SetVertexLayout(const VertexBuffer& t_VertexBuffer)
+		{
+			m_BufferLayout = t_VertexBuffer.GetLayout();
+		}
 
 		void SetCullMode(Diligent::CULL_MODE t_Mode) { this->m_CullMode = t_Mode; }
 
@@ -45,7 +79,9 @@ namespace Potato
 		bool m_DepthEnabled{ false };
 
 		Diligent::RefCntAutoPtr<Diligent::IPipelineState> m_pPSO;
+		Diligent::RefCntAutoPtr<Diligent::IShaderResourceBinding> m_pSRB;
 
+		std::vector<ShaderConstant> m_ShaderConstants;
 		std::vector<Shader> m_Shaders;
 		BufferLayout m_BufferLayout{};
 	};

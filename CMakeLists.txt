@@ -27,6 +27,9 @@ list(APPEND EDITOR_SRCS "Potato/Renderer/PipelineState.cpp")
 list(APPEND EDITOR_SRCS "Potato/Renderer/BasicRenderer.cpp")
 list(APPEND EDITOR_SRCS "Potato/Renderer/Buffer.cpp")
 list(APPEND EDITOR_SRCS "Potato/Renderer/Shader.cpp")
+list(APPEND EDITOR_SRCS "Potato/Core/Input.cpp")
+list(APPEND EDITOR_SRCS "Potato/Camera/OrthographicCamera.cpp")
+list(APPEND EDITOR_SRCS "Potato/Camera/OrthographicCameraController.cpp")
 #VSCODE-CMAKE-EXT-MARKER
 
 add_executable(MuffinClient ${EDITOR_SRCS})

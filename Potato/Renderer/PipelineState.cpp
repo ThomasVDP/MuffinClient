@@ -14,6 +14,7 @@ namespace Potato
 	void PipelineState::Bind()
 	{
 		Application::Get().GetWindow()->GetRenderContext()->GetImmediateContext()->SetPipelineState(m_pPSO);
+		Application::Get().GetWindow()->GetRenderContext()->GetImmediateContext()->CommitShaderResources(m_pSRB, Diligent::RESOURCE_STATE_TRANSITION_MODE_TRANSITION);
 	}
 
 	void PipelineState::AddShader(const Shader& t_Shader)
@@ -78,5 +79,29 @@ namespace Potato
 
 		//create the PipelineStateObject
 		Application::Get().GetWindow()->GetRenderContext()->GetRenderDevice()->CreatePipelineState(PSOCreateInfo, &m_pPSO);
+	}
+
+	void PipelineState::CreateShaderConstants(const std::initializer_list<ShaderConstantsData>& t_ShaderConstants)
+	{
+		for (ShaderConstantsData shaderConstants : t_ShaderConstants)
+		{
+			Diligent::RefCntAutoPtr<Diligent::IBuffer> iBuffer;
+			Diligent::BufferDesc CBDesc;
+			CBDesc.Name = shaderConstants.m_Name;
+			CBDesc.uiSizeInBytes = shaderConstants.m_Size;
+			CBDesc.Usage = Diligent::USAGE_DYNAMIC;
+			CBDesc.BindFlags = Diligent::BIND_UNIFORM_BUFFER;
+			CBDesc.CPUAccessFlags = Diligent::CPU_ACCESS_WRITE;
+			Application::Get().GetWindow()->GetRenderContext()->GetRenderDevice()->CreateBuffer(CBDesc, nullptr, &iBuffer);
+
+			switch (shaderConstants.m_ShaderType)
+			{
+			case ShaderTypeEnum::VERTEX: m_pPSO->GetStaticVariableByName(Diligent::SHADER_TYPE_VERTEX, shaderConstants.m_Name)->Set(iBuffer); break;
+			case ShaderTypeEnum::PIXEL: m_pPSO->GetStaticVariableByName(Diligent::SHADER_TYPE_PIXEL, shaderConstants.m_Name)->Set(iBuffer); break;
+			}
+			m_ShaderConstants.push_back({ shaderConstants.m_Name, shaderConstants.m_ShaderType, iBuffer });
+		}
+
+		m_pPSO->CreateShaderResourceBinding(&m_pSRB, true);
 	}
 }	// namespace Potato

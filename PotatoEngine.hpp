@@ -9,6 +9,14 @@
 #define POTAT_ENABLE_ASSERTS
 #include "Potato/Core.hpp"
 
+#include "Potato/TimeStep.hpp"
+
+#include "Potato/Core/Input.hpp"
+#include "Potato/Core/MouseCodes.hpp"
+#include "Potato/Core/KeyCodes.hpp"
+
+#include "Potato/Camera/OrthographicCameraController.hpp"
+
 // -----RENDERER----------------------
 #include "Potato/Renderer/Renderer.hpp"
 #include "Potato/Renderer/RenderCommand.hpp"

@@ -5,7 +5,7 @@
 namespace Muffin
 {
 	GraphicsBaseLayer::GraphicsBaseLayer() :
-		Layer("BaseLayer")
+		Layer("BaseLayer"), m_CameraController(960.0f / 720.0f)
 	{
 	}
 
@@ -30,15 +30,20 @@ namespace Muffin
 			this->framesRendered = 0;
 		}
 		//POTATO_TRACE("Frame time: {}", t_Timestep.GetMilliseconds());
+
+		m_CameraController.OnUpdate(t_Timestep);
 	}
 
 	void GraphicsBaseLayer::OnRender()
 	{
 		//render triangle
-		Potato::BasicRenderer::DrawTriangle();
+		Potato::BasicRenderer::BeginScene(m_CameraController.GetCamera());
+		Potato::BasicRenderer::DrawTriangle({ 0.0f, 0.0f });
+		//Potato::BasicRenderer::DrawTriangle({ 1.0f, -1.f });
 	}
 
 	void GraphicsBaseLayer::OnEvent(Potato::Event& event)
 	{
+		m_CameraController.OnEvent(event);
 	}
 }	// namespace Muffin
