@@ -1,11 +1,11 @@
 #ifndef POTATO_PERSPECTIVE_CAMERA_HPP
 #define POTATO_PERSPECTIVE_CAMERA_HPP
 
-#include <glm/glm.hpp>
+#include "Camera.hpp"
 
 namespace Potato
 {
-	class PerspectiveCamera
+	class PerspectiveCamera : public Camera
 	{
 	public:
 		PerspectiveCamera(float FOV, float aspectRatio, float near, float far);
@@ -26,9 +26,9 @@ namespace Potato
 			RecalculateViewMatrix();
 		}
 
-		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
-		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
-		const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+		const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
+		const glm::mat4& GetViewMatrix() const override { return m_ViewMatrix; }
+		const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
 
 	private:
 		void RecalculateViewMatrix();

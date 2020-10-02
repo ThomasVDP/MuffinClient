@@ -30,14 +30,10 @@ namespace Potato
 
 		void Bind();
 
-		const BufferLayout& GetLayout() const { return m_Layout; }
-		void SetLayout(const BufferLayout& t_Layout) { m_Layout = t_Layout; }
-
 		void Create(uint32_t t_BufferSize, void* t_BufferData);
 
 	private:
 		Diligent::RefCntAutoPtr<Diligent::IBuffer> m_Buffer;
-		BufferLayout m_Layout{};
 	};
 
 	class IndexBuffer
@@ -47,12 +43,13 @@ namespace Potato
 
 		void Bind();
 
-		uint32_t GetCount() const;
+		uint32_t GetCount() const { return m_Count; }
 
 		void Create(uint32_t t_BufferSize, uint32_t* t_Indices);
 
 	private:
 		Diligent::RefCntAutoPtr<Diligent::IBuffer> m_Buffer;
+		uint32_t m_Count;
 	};
 }	// namespace Potato
 

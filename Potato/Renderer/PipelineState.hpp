@@ -60,9 +60,9 @@ namespace Potato
 			*CBConstants = t_Data;
 		}
 
-		void SetVertexLayout(const VertexBuffer& t_VertexBuffer)
+		void SetVertexLayout(const BufferLayout& t_LayoutBuffer)
 		{
-			m_BufferLayout = t_VertexBuffer.GetLayout();
+			m_BufferLayout = t_LayoutBuffer;
 		}
 
 		void SetCullMode(Diligent::CULL_MODE t_Mode) { this->m_CullMode = t_Mode; }

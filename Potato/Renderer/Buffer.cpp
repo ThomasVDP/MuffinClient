@@ -38,6 +38,8 @@ namespace Potato
 
 	void IndexBuffer::Create(uint32_t t_BufferSize, uint32_t* t_Indices)
 	{
+		m_Count = t_BufferSize / sizeof(uint32_t);
+
 		Diligent::BufferDesc IndBuffDesc;
 		IndBuffDesc.Name = "Index buffer";
 		IndBuffDesc.Usage = Diligent::USAGE_STATIC;
