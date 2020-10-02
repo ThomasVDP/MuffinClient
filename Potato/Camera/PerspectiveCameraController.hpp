@@ -19,6 +19,8 @@ namespace Potato
 
 		void OnResize(float width, float height);
 
+		void SetActive(bool t_Activeness);
+
 		PerspectiveCamera& GetCamera() { return m_Camera; }
 		const PerspectiveCamera& GetCamera() const { return m_Camera; }
 
@@ -38,7 +40,8 @@ namespace Potato
 		glm::vec3 m_CameraRotation{ 0.0f, 0.0f, 0.0f };	  //In radians, in the anti-clockwise direction
 		float m_CameraTranslationSpeed = 5.0f, m_CameraRotationSpeed = 0.003f;
 
-		float lastX{ 0.0f }, lastY{ 0.0f };
+		float m_LastX{ 0.0f }, m_LastY{ 0.0f };
+		bool m_Active{ false };
 	};
 }	// namespace Potato
 

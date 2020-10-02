@@ -1,5 +1,8 @@
 #include "PerspectiveCameraController.hpp"
 
+#include <GLFW/glfw3.h>
+
+#include "Potato/Application.hpp"
 #include "Potato/Core/Input.hpp"
 #include "Potato/Core/KeyCodes.hpp"
 
@@ -17,6 +20,11 @@ namespace Potato
 
 	void PerspectiveCameraController::OnUpdate(Timestep ts)
 	{
+		if (!m_Active)
+		{
+			return;
+		}
+
 		if (Input::IsKeyPressed(POTATO_KEY_A))
 		{
 			//m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
@@ -96,17 +104,22 @@ namespace Potato
 
 	bool PerspectiveCameraController::OnMouseMoved(MouseMovedEvent& e)
 	{
-		if (lastX == 0 && lastY == 0)
+		if (!m_Active)
 		{
-			lastX = e.GetX();
-			lastY = e.GetY();
 			return false;
 		}
 
-		float deltaX = lastX - e.GetX();
-		lastX = e.GetX();
-		float deltaY = lastY - e.GetY();
-		lastY = e.GetY();
+		if (m_LastX == 0 && m_LastY == 0)
+		{
+			m_LastX = e.GetX();
+			m_LastY = e.GetY();
+			return false;
+		}
+
+		float deltaX = m_LastX - e.GetX();
+		m_LastX = e.GetX();
+		float deltaY = m_LastY - e.GetY();
+		m_LastY = e.GetY();
 		m_CameraRotation.x += deltaY * m_CameraRotationSpeed;
 		m_CameraRotation.y += deltaX * m_CameraRotationSpeed;
 
@@ -118,5 +131,21 @@ namespace Potato
 		m_Camera.SetRotation(m_CameraRotation);
 
 		return false;
+	}
+
+	void PerspectiveCameraController::SetActive(bool t_Activeness)
+	{
+		m_Active = t_Activeness;
+		m_LastX = 0.0f;
+		m_LastY = 0.0f;
+
+		if (m_Active)
+		{
+			glfwSetInputMode(static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow()), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+		else
+		{
+			glfwSetInputMode(static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow()), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
 	}
 }	// namespace Potato

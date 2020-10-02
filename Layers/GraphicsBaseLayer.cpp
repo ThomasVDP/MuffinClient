@@ -1,5 +1,7 @@
 #include "GraphicsBaseLayer.hpp"
 
+#include "Potato/Events/KeyEvent.hpp"
+
 namespace Muffin
 {
 	GraphicsBaseLayer::GraphicsBaseLayer() :
@@ -41,6 +43,14 @@ namespace Muffin
 
 	void GraphicsBaseLayer::OnEvent(Potato::Event& event)
 	{
+		if (event.GetEventType() == Potato::EventType::KeyReleased)
+		{
+			if ((uint16_t) static_cast<Potato::KeyReleasedEvent&>(event).GetKeyCode() == (uint16_t) POTATO_KEY_ESCAPE)
+			{
+				m_CameraActive = !m_CameraActive;
+				m_CameraController.SetActive(m_CameraActive);
+			}
+		}
 		m_CameraController.OnEvent(event);
 	}
 }	// namespace Muffin

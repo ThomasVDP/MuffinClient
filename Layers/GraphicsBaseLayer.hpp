@@ -25,6 +25,8 @@ namespace Muffin
 		uint32_t framesRendered{ 0 };
 
 		Potato::PerspectiveCameraController m_CameraController;
+
+		bool m_CameraActive{ false };
 	};
 }	// namespace Muffin
 
