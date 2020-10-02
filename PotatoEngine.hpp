@@ -16,6 +16,7 @@
 #include "Potato/Core/KeyCodes.hpp"
 
 #include "Potato/Camera/OrthographicCameraController.hpp"
+#include "Potato/Camera/PerspectiveCameraController.hpp"
 
 // -----RENDERER----------------------
 #include "Potato/Renderer/Renderer.hpp"

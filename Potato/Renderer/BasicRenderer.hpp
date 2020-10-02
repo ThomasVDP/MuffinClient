@@ -2,6 +2,7 @@
 #define POTATO_BASIC_RENDERER_HPP
 
 #include "Potato/Camera/OrthographicCamera.hpp"
+#include "Potato/Camera/PerspectiveCamera.hpp"
 
 namespace Potato
 {
@@ -11,6 +12,7 @@ namespace Potato
 		static void Init();
 
 		static void BeginScene(const OrthographicCamera& t_Camera);
+		static void BeginScene(const PerspectiveCamera& t_Camera);
 
 		static void EndScene();
 		static void Flush();

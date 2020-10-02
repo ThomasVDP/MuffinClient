@@ -15,7 +15,7 @@ namespace Potato
 		GraphicsContext::API ChosenAPI;
 
 		WindowProps(const std::string& title = "Potato Engine",
-					unsigned int width = 960,
+					unsigned int width = 1120,
 					unsigned int height = 720,
 					GraphicsContext::API t_api = GraphicsContext::API::Vulkan) :
 			Title(title),

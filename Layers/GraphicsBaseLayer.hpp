@@ -24,7 +24,7 @@ namespace Muffin
 		float timePassed{ 0.0f };
 		uint32_t framesRendered{ 0 };
 
-		Potato::OrthographicCameraController m_CameraController;
+		Potato::PerspectiveCameraController m_CameraController;
 	};
 }	// namespace Muffin
 

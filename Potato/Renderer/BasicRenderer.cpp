@@ -39,27 +39,31 @@ namespace Potato
 
 		s_Data.vertexBuffer.SetLayout({ { 0, 0, 3, Diligent::VT_FLOAT32, Diligent::False },
 										{ 1, 0, 4, Diligent::VT_FLOAT32, Diligent::False } });
-
 		s_Data.pipeline.SetVertexLayout(s_Data.vertexBuffer);
 		s_Data.pipeline.Create();
 		s_Data.pipeline.CreateShaderConstants({ { "Constants", sizeof(VertexShaderConstants), ShaderTypeEnum::VERTEX } });
 
-		Vertex triangleVertices[4] = {
+		Vertex squareVertices[4] = {
 			{ Diligent::float3(-0.5, 0.5, 0), Diligent::float4(1, 0, 0, 1) },
 			{ Diligent::float3(0.5, 0.5, 0), Diligent::float4(0, 1, 0, 1) },
 			{ Diligent::float3(-0.5, -0.5, 0), Diligent::float4(0, 0, 1, 1) },
 			{ Diligent::float3(0.5, -0.5, 0), Diligent::float4(1, 0, 0, 1) }
 		};
-		s_Data.vertexBuffer.Create(sizeof(triangleVertices), &triangleVertices);
+		s_Data.vertexBuffer.Create(sizeof(squareVertices), &squareVertices);
 
-		uint32_t triangleIndices[6] = {
+		uint32_t squareIndices[6] = {
 			0, 1, 2,
 			2, 1, 3
 		};
-		s_Data.indexBuffer.Create(sizeof(triangleIndices), triangleIndices);
+		s_Data.indexBuffer.Create(sizeof(squareIndices), squareIndices);
 	}
 
 	void BasicRenderer::BeginScene(const OrthographicCamera& t_Camera)
+	{
+		s_Data.pipeline.SetShaderConstants<VertexShaderConstants>(ShaderTypeEnum::VERTEX, "Constants", { t_Camera.GetViewProjectionMatrix() });
+	}
+
+	void BasicRenderer::BeginScene(const PerspectiveCamera& t_Camera)
 	{
 		s_Data.pipeline.SetShaderConstants<VertexShaderConstants>(ShaderTypeEnum::VERTEX, "Constants", { t_Camera.GetViewProjectionMatrix() });
 	}

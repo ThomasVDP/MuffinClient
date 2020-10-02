@@ -5,7 +5,7 @@
 namespace Muffin
 {
 	GraphicsBaseLayer::GraphicsBaseLayer() :
-		Layer("BaseLayer"), m_CameraController(960.0f / 720.0f)
+		Layer("BaseLayer"), m_CameraController(1120.0f / 720.0f)
 	{
 	}
 
