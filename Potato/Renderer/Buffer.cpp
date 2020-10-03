@@ -16,17 +16,27 @@ namespace Potato
 																									Diligent::SET_VERTEX_BUFFERS_FLAG_RESET);
 	}
 
-	void VertexBuffer::Create(uint32_t t_BufferSize, void* t_BufferData)
+	void VertexBuffer::Create(BufferUsage t_BufferUsage, uint32_t t_BufferSize, void* t_BufferData)
 	{
 		Diligent::BufferDesc VertBuffDesc;
 		VertBuffDesc.Name = "Vertex buffer";
-		VertBuffDesc.Usage = Diligent::USAGE_STATIC;
+
+		switch (t_BufferUsage)
+		{
+		case BufferUsage::STATIC: VertBuffDesc.Usage = Diligent::USAGE_STATIC; break;
+		case BufferUsage::DEFAULT: VertBuffDesc.Usage = Diligent::USAGE_DEFAULT; break;
+		case BufferUsage::DYNAMIC:
+			VertBuffDesc.Usage = Diligent::USAGE_DYNAMIC;
+			VertBuffDesc.CPUAccessFlags = Diligent::CPU_ACCESS_WRITE;
+			break;
+		}
+
 		VertBuffDesc.BindFlags = Diligent::BIND_VERTEX_BUFFER;
 		VertBuffDesc.uiSizeInBytes = t_BufferSize;
 		Diligent::BufferData VBData;
 		VBData.pData = t_BufferData;
 		VBData.DataSize = t_BufferSize;
-		Application::Get().GetWindow()->GetRenderContext()->GetRenderDevice()->CreateBuffer(VertBuffDesc, &VBData, &m_Buffer);
+		Application::Get().GetWindow()->GetRenderContext()->GetRenderDevice()->CreateBuffer(VertBuffDesc, (t_BufferUsage == BufferUsage::DYNAMIC ? nullptr : &VBData), &m_Buffer);
 	}
 
 	void IndexBuffer::Bind()

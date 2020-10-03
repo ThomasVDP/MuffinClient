@@ -9,7 +9,7 @@
 namespace Potato
 {
 	PerspectiveCameraController::PerspectiveCameraController(float aspectRatio) :
-		m_AspectRatio(aspectRatio), m_Fov(90), m_Camera(m_Fov, m_AspectRatio, 0.01f, 100.0f)
+		m_AspectRatio(aspectRatio), m_Fov(90), m_Camera(m_Fov, m_AspectRatio, s_NearPlane, s_FarPlane)
 	{
 		m_CameraPosition = { 0.0f, 0.0f, 5.0f };
 		m_Camera.SetPosition(m_CameraPosition);
@@ -93,7 +93,7 @@ namespace Potato
 	void PerspectiveCameraController::OnResize(float width, float height)
 	{
 		m_AspectRatio = width / height;
-		m_Camera.SetProjection(m_Fov, m_AspectRatio, 0.01f, 100.0f);
+		m_Camera.SetProjection(m_Fov, m_AspectRatio, s_NearPlane, s_FarPlane);
 	}
 
 	bool PerspectiveCameraController::OnWindowResized(WindowResizeEvent& e)

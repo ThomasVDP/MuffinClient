@@ -23,6 +23,13 @@ namespace Potato
 		std::vector<Diligent::LayoutElement> m_Elements;
 	};
 
+	enum class BufferUsage
+	{
+		STATIC = 0,
+		DEFAULT,
+		DYNAMIC
+	};
+
 	class VertexBuffer
 	{
 	public:
@@ -30,7 +37,7 @@ namespace Potato
 
 		void Bind();
 
-		void Create(uint32_t t_BufferSize, void* t_BufferData);
+		void Create(BufferUsage t_BufferUsage, uint32_t t_BufferSize, void* t_BufferData);
 
 	private:
 		Diligent::RefCntAutoPtr<Diligent::IBuffer> m_Buffer;

@@ -9,10 +9,12 @@ namespace Potato
 	{
 	public:
 		static void Init();
+		static void Shutdown();
 
 		static void BeginScene(const Camera& t_Camera);
 
-		static void DrawQuad();
+		//rotation in degrees
+		static void DrawQuad(const glm::vec3& t_Position, const glm::vec3& t_Rotation = { 0.0f, 0.0f, 0.0f });
 	};
 }	// namespace Potato
 
