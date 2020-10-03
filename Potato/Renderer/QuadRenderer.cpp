@@ -40,8 +40,8 @@ namespace Potato
 
 	void QuadRenderer::Init()
 	{
-		Shader vertexShader("vertex.vsh", ShaderTypeEnum::VERTEX);
-		Shader pixelShader("pixel.vsh", ShaderTypeEnum::PIXEL);
+		Shader vertexShader("shaders/vertex.vsh", ShaderTypeEnum::VERTEX);
+		Shader pixelShader("shaders/pixel.vsh", ShaderTypeEnum::PIXEL);
 
 		s_Data.pipeline.AddShader(vertexShader);
 		s_Data.pipeline.AddShader(pixelShader);
