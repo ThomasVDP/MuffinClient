@@ -21,6 +21,6 @@
 // -----RENDERER----------------------
 #include "Potato/Renderer/Renderer.hpp"
 #include "Potato/Renderer/RenderCommand.hpp"
-#include "Potato/Renderer/QuadRenderer.hpp"
+#include "Potato/Renderer/BlockRenderer.hpp"
 
 #endif

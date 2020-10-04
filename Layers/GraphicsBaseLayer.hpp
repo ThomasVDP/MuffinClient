@@ -24,6 +24,8 @@ namespace Muffin
 		float timePassed{ 0.0f };
 		uint32_t framesRendered{ 0 };
 
+		Potato::BlockRenderer m_BlockRenderer;
+
 		Potato::PerspectiveCameraController m_CameraController;
 
 		bool m_CameraActive{ false };

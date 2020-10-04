@@ -75,7 +75,7 @@ namespace Potato
 		std::string m_Name;
 		PipelineTypeEnum m_PipelineType;
 		Diligent::PRIMITIVE_TOPOLOGY m_PrimitiveTopology;
-		Diligent::CULL_MODE m_CullMode{ Diligent::CULL_MODE_NONE };
+		Diligent::CULL_MODE m_CullMode{ Diligent::CULL_MODE_BACK };
 		bool m_DepthEnabled{ false };
 
 		Diligent::RefCntAutoPtr<Diligent::IPipelineState> m_pPSO;
