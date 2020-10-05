@@ -9,6 +9,7 @@
 #include "LayerStack.hpp"
 #include "Window.hpp"
 #include "Potato/Renderer/GraphicsContext.hpp"
+#include "Potato/Renderer/RenderTarget.hpp"
 
 namespace Potato
 {
@@ -45,6 +46,9 @@ namespace Potato
 
 	private:
 		static Application* s_Instance;
+
+	private:
+		RenderTarget m_RenderTarget;
 	};
 
 	Application* CreateApplication();

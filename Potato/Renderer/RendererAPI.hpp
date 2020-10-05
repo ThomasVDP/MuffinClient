@@ -15,7 +15,9 @@ namespace Potato
 
 		void OnWindowResize(uint32_t t_Width, uint32_t t_Height);
 
-		void Clear(const glm::vec4& color);
+		void Clear(const glm::vec4& color, bool t_IsUsingRenderTarget = false);
+
+		void SetSwapChainRenderTargets();
 
 		void DrawVertices(uint32_t count);
 

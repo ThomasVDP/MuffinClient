@@ -7,6 +7,7 @@ project ("Minecraft Bot Client")
 set(GLFW_ENABLED ON CACHE BOOL "Whether to use GLFW to create the window surface (Vulkan-specific)" FORCE)
 set(DILIGENT_NO_OPENGL ON CACHE BOOL "" FORCE)
 add_subdirectory(DiligentCore)
+add_subdirectory(DiligentTools)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
@@ -31,8 +32,9 @@ list(APPEND EDITOR_SRCS "Potato/Camera/OrthographicCamera.cpp")
 list(APPEND EDITOR_SRCS "Potato/Camera/OrthographicCameraController.cpp")
 list(APPEND EDITOR_SRCS "Potato/Camera/PerspectiveCamera.cpp")
 list(APPEND EDITOR_SRCS "Potato/Camera/PerspectiveCameraController.cpp")
-list(APPEND EDITOR_SRCS "Potato/Renderer/QuadRenderer.cpp")
 list(APPEND EDITOR_SRCS "Potato/Renderer/BlockRenderer.cpp")
+list(APPEND EDITOR_SRCS "Potato/Renderer/Texture.cpp")
+list(APPEND EDITOR_SRCS "Potato/Renderer/RenderTarget.cpp")
 #VSCODE-CMAKE-EXT-MARKER
 
 add_executable(MuffinClient ${EDITOR_SRCS})
@@ -40,10 +42,11 @@ target_compile_options(MuffinClient PRIVATE -DENGINE_DLL)
 
 # file(COPY ${CMAKE_SOURCE_DIR}/Res DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin)
 
-target_include_directories(MuffinClient PUBLIC ${CMAKE_SOURCE_DIR} PRIVATE "DiligentCore")
+target_include_directories(MuffinClient PUBLIC ${CMAKE_SOURCE_DIR} PRIVATE "DiligentCore" PRIVATE "DiligentTools")
 
 target_link_libraries(MuffinClient PUBLIC ${CONAN_LIBS}
             PRIVATE Diligent-BuildSettings
+            PUBLIC Diligent-TextureLoader
 )
 
 if(VULKAN_SUPPORTED)

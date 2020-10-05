@@ -9,7 +9,7 @@
 namespace Potato
 {
 	PerspectiveCameraController::PerspectiveCameraController(float aspectRatio) :
-		m_AspectRatio(aspectRatio), m_Fov(90), m_Camera(m_Fov, m_AspectRatio, s_NearPlane, s_FarPlane)
+		m_AspectRatio(aspectRatio), m_Fov(glm::radians(90.0f)), m_Camera(m_Fov, m_AspectRatio, s_NearPlane, s_FarPlane)
 	{
 		m_CameraPosition = { 0.0f, 0.0f, 5.0f };
 		m_Camera.SetPosition(m_CameraPosition);

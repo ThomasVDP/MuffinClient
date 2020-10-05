@@ -19,9 +19,14 @@ namespace Potato
 			s_RendererAPI->OnWindowResize(t_Width, t_Height);
 		}
 
-		static void Clear(const glm::vec4& color)
+		static void Clear(const glm::vec4& color, bool t_IsUsingRenderTarget = false)
 		{
-			s_RendererAPI->Clear(color);
+			s_RendererAPI->Clear(color, t_IsUsingRenderTarget);
+		}
+
+		static void SetSwapChainRenderTargets()
+		{
+			s_RendererAPI->SetSwapChainRenderTargets();
 		}
 
 		static void Present()

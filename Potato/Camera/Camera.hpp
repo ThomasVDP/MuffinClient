@@ -1,6 +1,7 @@
 #ifndef POTATO_CAMERA_HPP
 #define POTATO_CAMERA_HPP
 
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 
 namespace Potato

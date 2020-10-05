@@ -54,6 +54,7 @@ namespace Muffin
 				m_CameraController.SetActive(m_CameraActive);
 			}
 		}
+
 		m_CameraController.OnEvent(event);
 	}
 }	// namespace Muffin

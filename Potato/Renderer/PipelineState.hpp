@@ -9,9 +9,9 @@
 #include <vector>
 
 #include "Potato/Core.hpp"
-#include "Potato/Application.hpp"
 #include "Shader.hpp"
 #include "Buffer.hpp"
+#include "Texture.hpp"
 
 namespace Potato
 {
@@ -43,6 +43,8 @@ namespace Potato
 
 		void Bind();
 
+		void BindTexture(const std::string& t_TextureName, Diligent::RefCntAutoPtr<Diligent::ITextureView> t_TextureSRV);
+
 		void AddShader(const Shader& t_Shader);
 
 		void CreateShaderConstants(const std::initializer_list<ShaderConstantsData>& t_ShaderConstants);
@@ -56,7 +58,7 @@ namespace Potato
 				return;
 			}
 			// Map the buffer and write current world-view-projection matrix
-			Diligent::MapHelper<T> CBConstants(Application::Get().GetWindow()->GetRenderContext()->GetImmediateContext(), shaderConstant->m_Buffer, Diligent::MAP_WRITE, Diligent::MAP_FLAG_DISCARD);
+			Diligent::MapHelper<T> CBConstants(GetImmediateContext(), shaderConstant->m_Buffer, Diligent::MAP_WRITE, Diligent::MAP_FLAG_DISCARD);
 			*CBConstants = t_Data;
 		}
 
@@ -65,11 +67,22 @@ namespace Potato
 			m_BufferLayout = t_LayoutBuffer;
 		}
 
+		void SetCustomFormats(bool t_UseCustomFormats) { m_CustomFormats = t_UseCustomFormats; }
+
+		void SetRenderFormats(Diligent::TEXTURE_FORMAT t_RenderTargetFormat, Diligent::TEXTURE_FORMAT t_DepthBufferFormat);
+
 		void SetCullMode(Diligent::CULL_MODE t_Mode) { this->m_CullMode = t_Mode; }
 
 		void SetDepthEnabled(bool t_DepthEnabled) { this->m_DepthEnabled = t_DepthEnabled; }
 
-		void Create();
+		void Create(const std::string& t_TextureName = "g_Texture");
+
+		void CreateShaderResourceBinding();
+
+		void ReleaseResourceBinding();
+
+	private:
+		Diligent::RefCntAutoPtr<Diligent::IDeviceContext> GetImmediateContext();
 
 	private:
 		std::string m_Name;
@@ -78,8 +91,12 @@ namespace Potato
 		Diligent::CULL_MODE m_CullMode{ Diligent::CULL_MODE_BACK };
 		bool m_DepthEnabled{ false };
 
+		bool m_CustomFormats{ false };
+
 		Diligent::RefCntAutoPtr<Diligent::IPipelineState> m_pPSO;
 		Diligent::RefCntAutoPtr<Diligent::IShaderResourceBinding> m_pSRB;
+		Diligent::TEXTURE_FORMAT m_RenderTargetFormat;
+		Diligent::TEXTURE_FORMAT m_DepthBufferFormat;
 
 		std::vector<ShaderConstant> m_ShaderConstants;
 		std::vector<Shader> m_Shaders;

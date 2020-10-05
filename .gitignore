@@ -1,5 +1,5 @@
 build/*
-!build/shaders/
+!build/assets/
 
 .vscode/**
 

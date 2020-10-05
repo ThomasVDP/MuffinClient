@@ -8,12 +8,12 @@ namespace Potato
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
-		QuadRenderer::Init();
+		//QuadRenderer::Init();
 	}
 
 	void Renderer::Shutdown()
 	{
-		QuadRenderer::Shutdown();
+		//QuadRenderer::Shutdown();
 	}
 
 	void Renderer::OnWindowResize(unsigned int t_Width, unsigned int t_Height)

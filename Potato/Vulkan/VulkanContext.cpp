@@ -28,6 +28,7 @@ namespace Potato
 
 		Diligent::SwapChainDesc SwapChainDesc;
 		SwapChainDesc.BufferCount = 3;
+		SwapChainDesc.DepthBufferFormat = Diligent::TEX_FORMAT_UNKNOWN;
 
 		std::vector<Diligent::IDeviceContext*> ppContexts(engineVkAttribs.NumDeferredContexts + 1);
 		m_pFactoryVk->CreateDeviceAndContextsVk(engineVkAttribs, &m_pDevice, ppContexts.data());
