@@ -16,7 +16,7 @@ namespace Potato
 	class Application
 	{
 	public:
-		Application(const std::string& name = "Potato App");
+		Application(const std::string& name = "Potato App", bool t_NoDepthBuffer = false);
 		virtual ~Application();
 
 		void Run();
@@ -32,6 +32,11 @@ namespace Potato
 
 		static Application& Get() { return *s_Instance; }
 
+	protected:
+		virtual void ClearWindow() = 0;
+
+		virtual void PresentWindow() = 0;
+
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
@@ -46,9 +51,6 @@ namespace Potato
 
 	private:
 		static Application* s_Instance;
-
-	private:
-		RenderTarget m_RenderTarget;
 	};
 
 	Application* CreateApplication();

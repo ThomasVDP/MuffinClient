@@ -15,7 +15,7 @@ namespace Potato
 		GlfwWindow(const WindowProps& props);
 		virtual ~GlfwWindow();
 
-		void OnUpdate() override;
+		void Present() override;
 
 		inline unsigned int GetWidth() const override { return m_Data.Width; }
 		inline unsigned int GetHeight() const override { return m_Data.Height; }
@@ -24,8 +24,6 @@ namespace Potato
 
 		// Window attributes
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
-		void SetVSync(bool enabled) override;
-		bool IsVSync() const override;
 
 		void* GetNativeWindow() const override { return m_Window; };
 

@@ -28,8 +28,8 @@ namespace Potato
 
 		~VulkanContext();
 
-		void Init() override;
-		void SwapBuffers() override;
+		void Init(bool t_NoDepthBuffer = false) override;
+		void Present() override;
 
 		void OnWindowResize(unsigned int t_Wdith, unsigned int t_Height) override;
 

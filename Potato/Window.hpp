@@ -13,12 +13,15 @@ namespace Potato
 		unsigned int Width;
 		unsigned int Height;
 		GraphicsContext::API ChosenAPI;
+		bool NoDepthBuffer;
 
 		WindowProps(const std::string& title = "Potato Engine",
+					bool t_NoDepthBuffer = false,
 					unsigned int width = 1120,
 					unsigned int height = 720,
 					GraphicsContext::API t_api = GraphicsContext::API::Vulkan) :
 			Title(title),
+			NoDepthBuffer(t_NoDepthBuffer),
 			Width(width), Height(height),
 			ChosenAPI(t_api)
 		{
@@ -33,7 +36,7 @@ namespace Potato
 
 		virtual ~Window() {}
 
-		virtual void OnUpdate() = 0;
+		virtual void Present() = 0;
 
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
@@ -42,8 +45,6 @@ namespace Potato
 
 		// Window attributes
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
-		virtual void SetVSync(bool enabled) = 0;
-		virtual bool IsVSync() const = 0;
 
 		virtual void* GetNativeWindow() const = 0;
 

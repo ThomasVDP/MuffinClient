@@ -9,17 +9,14 @@ namespace Potato
 {
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application(const std::string& name) :
-		m_RenderTarget("Barrel distortion RT", 1120 / 720)
+	Application::Application(const std::string& t_Name, bool t_NoDepthBuffer)
 	{
 		POTATO_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
-		m_Window = Window::Create(WindowProps(name));
+		m_Window = Window::Create(WindowProps(t_Name, t_NoDepthBuffer));
 		m_Window->SetEventCallback(POTATO_BIND_EVENT_FN(OnEvent));
 
 		Renderer::Init();
-
-		m_RenderTarget.Create();
 	}
 
 	Application::~Application()
@@ -49,8 +46,6 @@ namespace Potato
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(POTATO_BIND_EVENT_FN(OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(POTATO_BIND_EVENT_FN(OnWindowResize));
-
-		m_RenderTarget.OnEvent(e);
 
 		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 		{
@@ -82,7 +77,7 @@ namespace Potato
 				}
 			}
 
-			m_RenderTarget.Bind({ 0.35f, 0.35f, 0.35f, 1.0f });
+			this->ClearWindow();
 			//draw layers
 			if (!m_Minimized)
 			{
@@ -94,12 +89,7 @@ namespace Potato
 				}
 			}
 
-			//clear screen
-			Potato::RenderCommand::Clear({ 0.0f, 0.0f, 0.0f, 1.0f }, true);
-			m_RenderTarget.RenderToScreen();
-
-			//Present on screen
-			m_Window->OnUpdate();
+			this->PresentWindow();
 		}
 	}
 

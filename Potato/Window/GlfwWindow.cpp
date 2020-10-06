@@ -51,7 +51,7 @@ namespace Potato
 		m_Window = glfwCreateWindow((int) props.Width, (int) props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
 		m_Context = GraphicsContext::Create(m_Window, props.ChosenAPI);
-		m_Context->Init();
+		m_Context->Init(props.NoDepthBuffer);
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		//SetVSync(true);
@@ -150,24 +150,9 @@ namespace Potato
 		POTATO_CORE_INFO("Terminated GLFW!");
 	}
 
-	void GlfwWindow::OnUpdate()
+	void GlfwWindow::Present()
 	{
 		glfwPollEvents();
-		m_Context->SwapBuffers();
-	}
-
-	void GlfwWindow::SetVSync(bool enabled)
-	{
-		if (enabled)
-			glfwSwapInterval(1);
-		else
-			glfwSwapInterval(0);
-
-		m_Data.VSync = enabled;
-	}
-
-	bool GlfwWindow::IsVSync() const
-	{
-		return m_Data.VSync;
+		m_Context->Present();
 	}
 }	// namespace Potato

@@ -14,7 +14,7 @@ namespace Potato
 	{
 	}
 
-	void VulkanContext::Init()
+	void VulkanContext::Init(bool t_NoDepthBuffer)
 	{
 		//Initialize Vulkan Engine
 		m_pFactoryVk = Diligent::GetEngineFactoryVk();
@@ -28,7 +28,10 @@ namespace Potato
 
 		Diligent::SwapChainDesc SwapChainDesc;
 		SwapChainDesc.BufferCount = 3;
-		SwapChainDesc.DepthBufferFormat = Diligent::TEX_FORMAT_UNKNOWN;
+		if (t_NoDepthBuffer)
+		{
+			SwapChainDesc.DepthBufferFormat = Diligent::TEX_FORMAT_UNKNOWN;
+		}
 
 		std::vector<Diligent::IDeviceContext*> ppContexts(engineVkAttribs.NumDeferredContexts + 1);
 		m_pFactoryVk->CreateDeviceAndContextsVk(engineVkAttribs, &m_pDevice, ppContexts.data());
@@ -49,7 +52,7 @@ namespace Potato
 			m_pDeferredContexts[ctx] = ppContexts[1 + ctx];
 	}
 
-	void VulkanContext::SwapBuffers()
+	void VulkanContext::Present()
 	{
 		this->m_pSwapChain->Present();
 	}

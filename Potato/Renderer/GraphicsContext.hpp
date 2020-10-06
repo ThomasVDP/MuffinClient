@@ -24,8 +24,8 @@ namespace Potato
 
 		virtual ~GraphicsContext() {}
 
-		virtual void Init() = 0;
-		virtual void SwapBuffers() = 0;
+		virtual void Init(bool t_NoDepthBuffer = false) = 0;
+		virtual void Present() = 0;
 
 		virtual void OnWindowResize(unsigned int t_Wdith, unsigned int t_Height) = 0;
 
