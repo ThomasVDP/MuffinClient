@@ -43,7 +43,7 @@ namespace Potato
 		float m_LastX{ 0.0f }, m_LastY{ 0.0f };
 		bool m_Active{ false };
 
-		constexpr static float s_NearPlane = 0.01f;
+		constexpr static float s_NearPlane = 0.05f;
 		constexpr static float s_FarPlane = 100.0f;
 	};
 }	// namespace Potato

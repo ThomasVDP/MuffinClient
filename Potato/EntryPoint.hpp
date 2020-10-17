@@ -4,10 +4,11 @@
 #include "Application.hpp"
 
 extern Potato::Application* Potato::CreateApplication();
+extern const std::string Potato::GetAppLogName();
 
 int main(int argc, char** argv)
 {
-	Potato::Log::Init();
+	Potato::Log::Init(Potato::GetAppLogName());
 	POTATO_CORE_INFO("Initialized Log!");
 
 	POTATO_CORE_INFO("Launching Application!");

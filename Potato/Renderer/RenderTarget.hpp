@@ -15,6 +15,7 @@ namespace Potato
 	public:
 		RenderTarget(const glm::vec4& t_ClearColor);
 
+		//returns the color shader resource;
 		Diligent::RefCntAutoPtr<Diligent::ITextureView> CreateRenderTargets();
 
 		Diligent::RefCntAutoPtr<Diligent::ITextureView> GetColorView() const { return m_pColorRTV; }

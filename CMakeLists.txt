@@ -12,8 +12,6 @@ add_subdirectory(DiligentTools)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
-list(APPEND EDITOR_SRCS "MainApp.cpp")
-list(APPEND EDITOR_SRCS "Layers/GraphicsBaseLayer.cpp")
 list(APPEND EDITOR_SRCS "Potato/Application.cpp")
 list(APPEND EDITOR_SRCS "Potato/Log.cpp")
 list(APPEND EDITOR_SRCS "Potato/Window/GlfwWindow.cpp")
@@ -36,6 +34,11 @@ list(APPEND EDITOR_SRCS "Potato/Renderer/BlockRenderer.cpp")
 list(APPEND EDITOR_SRCS "Potato/Renderer/Texture.cpp")
 list(APPEND EDITOR_SRCS "Potato/Renderer/RenderTarget.cpp")
 list(APPEND EDITOR_SRCS "Potato/PipelineStates/DefaultRenderTargetObject.cpp")
+
+list(APPEND EDITOR_SRCS "Muffin/MainApp.cpp")
+list(APPEND EDITOR_SRCS "Muffin/World/World.cpp")
+list(APPEND EDITOR_SRCS "Muffin/Core/MuffinClient.cpp")
+list(APPEND EDITOR_SRCS "Muffin/Graphics/Skybox/Skybox.cpp")
 #VSCODE-CMAKE-EXT-MARKER
 
 add_executable(MuffinClient ${EDITOR_SRCS})

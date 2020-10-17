@@ -54,6 +54,8 @@ namespace Potato
 	};
 
 	Application* CreateApplication();
+
+	const std::string GetAppLogName();
 }	// namespace Potato
 
 #endif
