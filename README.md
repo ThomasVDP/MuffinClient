@@ -1,5 +1,6 @@
 # MuffinClient
-A C++ replica of the well known game Minecraft
+### DISCLAIMER: This project is definitely nowhere near it's goal and development is already paused!!!!
+A C++ replica (definitely not, still very early development and already paused!!!!!!!) of the well known game Minecraft
 
 ## Building
 ### Requirements
